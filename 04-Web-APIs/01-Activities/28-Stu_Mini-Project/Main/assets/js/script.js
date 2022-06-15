@@ -91,7 +91,8 @@ function renderBlanks() {
 
 // Updates win count on screen and sets win count to client storage
 function setWins() {
-
+  win.textContent = winCounter;
+  localStorage.setItem("winCount", winCounter);
 }
 
 // Updates lose count on screen and sets lose count to client storage
@@ -103,21 +104,26 @@ function setLosses() {
 // These functions are used by init
 function getWins() {
   // Get stored value from client storage, if it exists
-
+  var storedWins = localStorage.getItem("winCount");
   // If stored value doesn't exist, set counter to 0
   if (storedWins === null) {
     winCounter = 0;
   } else {
     // If a value is retrieved from client storage set the winCounter to that value
-
+    winCounter = storedWins;
   }
   //Render win count to page
-
+  win.textContent = winCounter;
 }
 
 function getlosses() {
   var storedLosses = localStorage.getItem("loseCount");
-
+  if (storedLosses === null) {
+    loseCounter = 0;
+  } else {
+    loseCounter = storedLosses;
+  }
+  lose.textContent = loseCounter;
 }
 
 function checkWin() {
@@ -130,17 +136,36 @@ function checkWin() {
 
 // Tests if guessed letter is in word and renders it to the screen.
 function checkLetters(letter) {
-
+  var letterInWord = false;
+  for (var i = 0; i < numBlanks; i++) {
+    if (chosenWord[i] === letter) {
+      letterInWord = true;
+    }
+  }
+  if (letterInWord) {
+    for (var j = 0; j < numBlanks; j++) {
+      if (chosenWord[j] === letter) {
+        blanksLetters[j] = letter;
+      }
+    }
+    wordBlank.textContent = blanksLetters.join(" ");
+  }
 }
 
 // Attach event listener to document to listen for key event
 document.addEventListener("keydown", function(event) {
   // If the count is zero, exit function
-
+  if (timerCount === 0) {
+    return;
+  }
   // Convert all keys to lower case
-
+  var key = event.key.toLowerCase();
+  var alphabetNumericCharacters = "abcdefghijklmnopqrstuvwxyz0123456789 ".split("");
   // Test if key pushed is letter
-
+  if (alphabetNumericCharacters.includes(key)) {
+    var letterGuessed = event.key;
+    checkLetters(letterGuessed)
+    checkWin();
   }
 });
 
