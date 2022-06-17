@@ -5,6 +5,8 @@ var clearEl = $('#clear');
 
 // Immediately hide the clear button
 clearEl.hide();
+showLettersBtnEl.hide[];
+showLettersBtnEl.fadein();
 
 function renderLetters() {
   var letters = [
@@ -60,7 +62,7 @@ buttonListEl.on('click', '.letter-button', function (event) {
   displayLetterEl.addClass('letter');
 
   // get letter from clicked letter button's `data-letter` attribute and use it for display
-  displayLetterEl.text($(event.target).attr('data-letter'));
+  displayLetterEl.text($(event.target).attr('data-letter')); //getting value from data set event target
   displayEl.append(displayLetterEl);
 });
 
@@ -69,7 +71,7 @@ showLettersBtnEl.on('click', function () {
   // render letters
   renderLetters();
   // hide show letters button
-  showLettersBtnEl.hide();
+  showLettersBtnEl.hide(); //could also use fade-in)
   // display clear button
   clearEl.show();
 });
